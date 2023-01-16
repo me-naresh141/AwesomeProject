@@ -1,33 +1,67 @@
 import React, {useState} from 'react';
-import {Button, Text, View, StyleSheet} from 'react-native';
+import {Text, TextInput, View, StyleSheet, Button} from 'react-native';
 import CompanyData from './components/companyData';
 import UserData from './components/userdata';
 import Extstyle from './style';
 const App = () => {
-  const [name, updateName] = useState('Naresh state in react native');
-  function testName() {
-    updateName('Naresh practics State');
-  }
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [display, setDisplay] = useState(false);
+  const resetFormData = () => {
+    setDisplay(false);
+    setName('');
+    setEmail('');
+    setPassword('');
+  };
   return (
     <View>
-      <Text
-        style={{
-          fontSize: 30,
-          color: 'red',
-          backgroundColor: 'green',
-          marginBottom: 10,
-          textAlignVertical: 'center',
-          textAlign: 'center',
-          borderRadius: 30,
-        }}>
-        This is inline Style
+      <Text style={{color: 'green', fontSize: 30}}>
+        Simple Form in React-native
       </Text>
-      <Text style={style.textBox}> This is internal style</Text>
-      <Text style={{fontSize: 30}}> This is my first project</Text>
-      <Text style={{fontSize: 30}}> {name}</Text>
-      <Button title="Update name" onPress={testName}></Button>
-      <UserData />
-      <CompanyData />
+      <TextInput
+        style={style.input}
+        placeholder="Enter User name"
+        onChangeText={text => setName(text)}
+        value={name}
+      />
+      <TextInput
+        style={style.input}
+        placeholder=" Enter User email"
+        onChangeText={text => setEmail(text)}
+        value={email}
+      />
+      <TextInput
+        style={style.input}
+        placeholder=" Enter User Password"
+        onChangeText={text => setPassword(text)}
+        secureTextEntry={true}
+        value={password}
+      />
+      <View style={{marginBottom: 20}}>
+        <Button
+          color={'green'}
+          title="print Details"
+          onPress={() => setDisplay(true)}
+        />
+      </View>
+      <Button title="Clear Details" onPress={resetFormData} />
+
+      <View>
+        {display ? (
+          <View>
+            <Text style={{fontSize: 30, color: 'orange'}}>
+              User name is:{name}
+            </Text>
+            <Text style={{fontSize: 30, color: 'orange'}}>
+              User email is :{email}
+            </Text>
+            <Text style={{fontSize: 30, color: 'orange'}}>
+              User Password:{password}
+            </Text>
+          </View>
+        ) : null}
+      </View>
     </View>
   );
 };
@@ -35,15 +69,11 @@ const App = () => {
 // external css
 
 const style = StyleSheet.create({
-  textBox: {
-    color: 'white',
-    fontSize: 30,
-    backgroundColor: 'blue',
-    borderRadius: 30,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    borderColor: 'red',
-    borderWidth: 3,
+  input: {
+    fontSize: 20,
+    borderColor: 'blue',
+    borderWidth: 2,
+    margin: 10,
   },
 });
 export default App;
